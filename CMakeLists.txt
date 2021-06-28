@@ -28,7 +28,7 @@
 
 cmake_minimum_required(VERSION 3.1)
 project(Snappy VERSION 1.1.8 LANGUAGES C CXX)
-
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # C++ standard can be overridden when this is used as a sub-project.
 if(NOT CMAKE_CXX_STANDARD)
   # This project requires C++11.
