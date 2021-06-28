@@ -129,12 +129,12 @@ find_package(GTest QUIET)
 if(GTEST_FOUND)
   set(HAVE_GTEST 1)
 endif(GTEST_FOUND)
-
+set(HAVE_GTEST 0)
 find_package(Gflags QUIET)
 if(GFLAGS_FOUND)
   set(HAVE_GFLAGS 1)
 endif(GFLAGS_FOUND)
-
+set(HAVE_GFLAGS 0)
 configure_file(
   "cmake/config.h.in"
   "${PROJECT_BINARY_DIR}/config.h"
