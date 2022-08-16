@@ -1014,7 +1014,7 @@ void MemMove(ptrdiff_t dst, const void* src, size_t size) {
 }
 
 SNAPPY_ATTRIBUTE_ALWAYS_INLINE
-size_t AdvanceToNextTag(const uint8_t** ip_p, size_t* tag) {
+inline size_t AdvanceToNextTag(const uint8_t** ip_p, size_t* tag) {
   const uint8_t*& ip = *ip_p;
   // This section is crucial for the throughput of the decompression loop.
   // The latency of an iteration is fundamentally constrained by the
@@ -1026,7 +1026,8 @@ size_t AdvanceToNextTag(const uint8_t** ip_p, size_t* tag) {
   size_t literal_len = *tag >> 2;
   size_t tag_type = *tag;
   bool is_literal;
-#if defined(__GNUC__) && defined(__x86_64__)
+  // https://github.com/google/snappy/commit/8dd58a519f79f0742d4c68fbccb2aed2ddb651e8
+#if defined(__GCC_ASM_FLAG_OUTPUTS__) && defined(__x86_64__)
   // TODO clang misses the fact that the (c & 3) already correctly
   // sets the zero flag.
   asm("and $3, %k[tag_type]\n\t"
